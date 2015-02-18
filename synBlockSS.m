@@ -40,6 +40,9 @@ satNumList = zeros(1,iteraN+1);
 symList = zeros(1,iteraN+1);
 satDecr = 0;
 for cnt = 1:iteraN
+	
+	disp(' ');
+	disp(['iteration ',num2str(cnt)]);
 	numSites = sum(sum(constr~=0));
 	%miu = zeros(6,numSites);
 	%facValue = zeros(6,numSites);
@@ -66,9 +69,9 @@ for cnt = 1:iteraN
 	end
 	
 	%newO = blockSampleSAT(G, miu, constr, blocks, curO, 1000, [0.8, 0.1, 0.25]);
-	tic
+	%tic
 	[curO, satNum] = blockSampleSATNS(G, miu, constr, blocks, blocksByAnc, numTile, curO, designTileNum, [pWlak, pFlip, pSmooth, T]);
-	toc
+	%toc
 	%disp('one finished');
 	%curO = newO;
     
@@ -79,9 +82,11 @@ for cnt = 1:iteraN
 	symList(cnt+1) = patSymAnaly(curO, horRelat, verRelat);
 	
 	
-	disp(['symNum is ',num2str(symList(cnt+1))]);
+	%disp(['symNum is ',num2str(symList(cnt+1))]);
 	
-	KLdiv = klDivergence(KLpre, curO)
+	KLdiv = klDivergence(KLpre, curO);
+	%disp(['KL divergence is ',num2str(KLdiv)]);
+	
 	KLdivList(cnt) = KLdiv;
 	KLdivMin = KLdiv;
 	%choseConst = min(0.5+0.5*exp(-(satNum - satNumList(cnt))/10), 0.95);
@@ -93,7 +98,7 @@ for cnt = 1:iteraN
 	%end
 	
 	
-	disp(['satNum is ',num2str(satNum)]);
+	%disp(['Satisfied number is ',num2str(satNum)]);
 	satNumList(cnt+1) = satNum;
 	if satNum <= satNumList(cnt)
 		%if symList(cnt+1) > symList(cnt)
@@ -106,6 +111,7 @@ for cnt = 1:iteraN
 		%end
 		
 		satDecr = satDecr + 1;
+		
 		T = T*2;
 		pWlak = pWlak + 0.5*(1-pWlak);
 		pFlip = pFlip*0.75;

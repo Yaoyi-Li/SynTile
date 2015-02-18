@@ -7,7 +7,9 @@ close all;
 clear;
 clc;
 
-rand('seed', 0);
+%pcode *.m
+
+rand('seed', 1);
 
 iteraN = 30;
 
@@ -15,6 +17,10 @@ tileDir = './facade';
 designDir = './design';
 newDesignDir = './newDesigns';
 constrPath = './constrain.txt';
+
+if ~exist(newDesignDir, 'dir')
+	mkdir(newDesignDir);
+end
 
 [tileSets, numTile, inPatt, numDesign, constr] = dataReader(tileDir, designDir, constrPath);
 

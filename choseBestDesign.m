@@ -30,7 +30,7 @@ end
 bestIdx = index(1);
 for cnt = 2:numDesign
 	if satNumList(index(cnt)) > satNumList(bestIdx)
-		bestIdx = index(cnt)
+		bestIdx = index(cnt);
 	end
 end
 
